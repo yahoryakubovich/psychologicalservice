@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %} Статьи {% endblock %}
+{% block content %}
+<h1>{{ article.title }}</h1>
+    <p>{{ article.content }}</p>
+    <a href="{% url 'articles:article_list' %}">Назад к списку статей</a>
+    <a href="{% url 'articles:article_update' article.pk %}">Редактировать статью</a>
+    <a href="{% url 'articles:article_delete' article.pk %}">Удалить статью</a>
+{% endblock %}
