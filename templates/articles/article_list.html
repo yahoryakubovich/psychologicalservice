@@ -1,17 +1,46 @@
 {% extends "base.html" %}
-{% block title %} Статьи {% endblock %}
+{% block title %} Статьи по психологии {% endblock %}
 {% block content %}
-     <h1>Список статей</h1>
-    <ul>
-        {% for article in articles %}
-            <li>
-                <h2>{{ article.title }}</h2>
-                <p>{{ article.content }}</p>
-                <p>Автор: {{ article.author.username }}</p>
-                <p>Дата публикации: {{ article.pub_date }}</p>
-            </li>
-        {% empty %}
-            <li>Нет доступных статей.</li>
-        {% endfor %}
-    </ul>
+    <form class="d-flex" role="search" method="get" action="{% url 'articles:article_search' %}">
+        <input class="form-control me-2" type="text" name="query" placeholder="Поиск" aria-label="Поиск">
+        <button class="btn btn-primary" type="submit">Поиск</button>
+    </form>
+    <div class="row">
+        <div class="col-6 mt-5 text-start">
+            <h2>Список статей</h2>
+        </div>
+        <div class="col-6 mt-5 text-end">
+            <a class="text-decoration-none text-dark" href="{% url 'articles:article_create' %}"><h2>Создать статью</h2>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <ul>
+            {% for article in articles %}
+                <div class="col-12 mt-3">
+                <ul class="list-group">
+                    <li class="shadow-sm list-group-item">
+                        <div class="row">
+                            <div class="col-12 mb-1">
+                                <a class="text-decoration-none text-dark"
+                                   href="{% url 'articles:article_detail' article.id %}">
+                                    <h2>{{ article.title }}</h2>
+                                </a>
+                            </div>
+                            <p>{{ article.content }}</p>
+                            <div class="col-6 text-start">
+                                <p>Автор: {{ article.author.username }}</p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p>Дата публикации: {{ article.pub_date }}</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            {% empty %}
+                <li>Нет доступных статей.</li>
+            {% endfor %}
+            </div>
+        </ul>
+    </div>
 {% endblock %}

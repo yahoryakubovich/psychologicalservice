@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %} Статьи {% endblock %}
+{% block content %}
+<body>
+    <h1>Результаты поиска:</h1>
+    <ul>
+        {% for article in results %}
+            <li><a href="{% url 'articles:article_detail' article.pk %}">{{ article.title }}</a></li>
+        {% empty %}
+            <li>Ничего не найдено.</li>
+        {% endfor %}
+    </ul>
+</body>
+{% endblock %}

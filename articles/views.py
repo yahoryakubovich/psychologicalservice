@@ -35,3 +35,15 @@ class ArticleDeleteView(DeleteView):
     model = Article
     template_name = 'articles/article_confirm_delete.html'
     success_url = reverse_lazy('articles:article_list')
+
+class ArticleSearchView(ListView):
+    model = Article
+    template_name = 'articles/article_search.html'
+    context_object_name = 'results'
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        if query:
+            return Article.objects.filter(title__icontains=query)
+        else:
+            return Article.objects.all()
