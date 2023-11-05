@@ -7,27 +7,26 @@
     </form>
     <div class="row">
         <div class="col-6 mt-5 text-start">
-            <h2>Список статей</h2>
+            <h2>Cтатьи по психологии</h2>
         </div>
         <div class="col-6 mt-5 text-end">
-            <a class="text-decoration-none text-dark" href="{% url 'articles:article_create' %}"><h2>Создать статью</h2>
-            </a>
+            <a class="btn btn-primary btn-lg" href="{% url 'articles:article_create' %}" role="button">Создать статью</a>
         </div>
     </div>
     <div class="row">
         <ul>
             {% for article in articles %}
-                <div class="col-12 mt-3">
+                <div class="col-12 mt-3 text-start">
                 <ul class="list-group">
                     <li class="shadow-sm list-group-item">
                         <div class="row">
                             <div class="col-12 mb-1">
                                 <a class="text-decoration-none text-dark"
                                    href="{% url 'articles:article_detail' article.id %}">
-                                    <h2>{{ article.title }}</h2>
+                                    <h6>{{ article.title }}</h6>
                                 </a>
                             </div>
-                            <p>{{ article.content }}</p>
+                            <p>{{ article.content|slice:":250" }}...</p>
                             <div class="col-6 text-start">
                                 <p>Автор: {{ article.author.username }}</p>
                             </div>
@@ -43,4 +42,37 @@
             </div>
         </ul>
     </div>
+     <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
 {% endblock %}

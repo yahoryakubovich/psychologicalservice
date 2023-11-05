@@ -7,6 +7,7 @@ class ArticleListView(ListView):
     model = Article
     template_name = 'articles/article_list.html'
     context_object_name = 'articles'
+    paginate_by = 2
 
 class ArticleDetailView(DetailView):
     model = Article
